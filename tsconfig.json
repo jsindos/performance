@@ -1,3 +1,12 @@
 {
-  "extends": "@tsconfig/react-native/tsconfig.json"
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "target": "es6",
+    "baseUrl": "./",
+    "paths": {
+      "pop-components/*": [
+        "node_modules/pop-components/*"
+      ]
+    }
+  }
 }

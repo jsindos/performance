@@ -27,20 +27,48 @@ import {
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native'
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client'
+
+import ProductDetailFixedMenu from './ProductDetailFixedMenu'
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-const Stack = createNativeStackNavigator()
+export type RootStackParamList = {
+  Home: undefined;
+  Second: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>()
+
+const client = new ApolloClient({
+  uri: 'http://localhost:8080/graphql',
+  cache: new InMemoryCache()
+})
 
 function MyStack () {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name='Home' component={App} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ApolloProvider client={client}>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName='Second'
+        >
+          <Stack.Screen name='Home' component={App} />
+          <Stack.Screen name='Second' component={Second} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ApolloProvider>
+  )
+}
+
+const Second = () => {
+  return (
+    <ProductDetailFixedMenu>
+      <Text>
+        Hello
+      </Text>
+    </ProductDetailFixedMenu>
   )
 }
 
