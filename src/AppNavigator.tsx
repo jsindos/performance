@@ -6,6 +6,8 @@ import { NavigationKeys, RootStackParamList } from './constants'
 import ExploreIcon from './pop-components/ExploreIcon'
 import Explore from './Explore'
 import ProductDetailFixedMenu from './ProductDetailFixedMenu'
+import { NavigationContainer } from '@react-navigation/native'
+import { ReactNavigationPerformanceView } from '@shopify/react-native-performance-navigation'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -19,18 +21,20 @@ const { Tab, buildProfiledBottomTabBarButton } = createProfiledBottomTabNavigato
 
 export default () => {
   return (
-    <Stack.Navigator
-      initialRouteName={NavigationKeys.PRODUCT_DETAIL}
-    >
-      <Stack.Screen
-        name={NavigationKeys.BUYING}
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName={NavigationKeys.PRODUCT_DETAIL}
+      >
+        <Stack.Screen
+          name={NavigationKeys.BUYING}
         // eslint-disable-next-line
         children={props => {
           return <BuyingNavigator {...props} />
         }}
-      />
-      <Stack.Screen name={NavigationKeys.PRODUCT_DETAIL} component={ProductDetail} />
-    </Stack.Navigator>
+        />
+        <Stack.Screen name={NavigationKeys.PRODUCT_DETAIL} component={ProductDetail} />
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }
 

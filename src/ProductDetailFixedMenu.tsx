@@ -2,10 +2,10 @@ import React, { useRef } from 'react'
 import { Animated, Dimensions, Platform, StyleSheet, TouchableOpacity, View, NativeSyntheticEvent, NativeScrollEvent } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { useNavigation } from '@react-navigation/native'
 
 import Times from './Times'
 import { NavigationKeys, RootStackParamList } from './constants'
+import { ReactNavigationPerformanceView, useProfiledNavigation } from '@shopify/react-native-performance-navigation'
 
 // import HeartIcon from './HeartIcon'
 // import LeftCaret from '../../assets/icons/LeftCaret'
@@ -40,7 +40,7 @@ export default ({ children }: { children: React.ReactNode }) => {
   }
 
   type homeScreenProp = NativeStackNavigationProp<RootStackParamList, 'Buying'>
-  const navigation = useNavigation<homeScreenProp>()
+  const { navigate } = useProfiledNavigation<homeScreenProp>()
 
   //   const goBackWithParams = useGoBackWithParams()
 
@@ -51,7 +51,7 @@ export default ({ children }: { children: React.ReactNode }) => {
   //   const { setIsLightMode } = useContext(ProductOptionsContext)
 
   return (
-    <>
+    <ReactNavigationPerformanceView screenName={NavigationKeys.PRODUCT_DETAIL} interactive>
       <View style={{ position: 'absolute', right: 0, left: 0, paddingBottom: 14, paddingTop: 14 + top, zIndex: 1 }}>
         <Animated.View
           style={[StyleSheet.absoluteFill, { opacity: headerOpacity, backgroundColor: '#fff', borderBottomColor: '#efefef', borderBottomWidth: 1 }]}
@@ -59,7 +59,18 @@ export default ({ children }: { children: React.ReactNode }) => {
 
         <View style={{ height: 32 }}>
           <Animated.View style={[styles.iconContainer, { opacity: inverseHeaderOpacity, ...boxShadow, left: 25 }]} />
-          <TouchableOpacity onPressIn={() => navigation.navigate(NavigationKeys.BUYING)} style={[styles.iconContainer, { left: 25 }]}>
+          <TouchableOpacity
+            onPressIn={uiEvent => {
+              navigate(
+                {
+                  source: NavigationKeys.PRODUCT_DETAIL,
+                  uiEvent
+                },
+                NavigationKeys.BUYING
+              )
+            }}
+            style={[styles.iconContainer, { left: 25 }]}
+          >
             <Times />
           </TouchableOpacity>
         </View>
@@ -91,7 +102,7 @@ export default ({ children }: { children: React.ReactNode }) => {
       >
         {children}
       </Animated.ScrollView>
-    </>
+    </ReactNavigationPerformanceView>
   )
 }
 

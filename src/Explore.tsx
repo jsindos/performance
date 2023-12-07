@@ -2,6 +2,8 @@ import React, { PropsWithChildren } from 'react'
 import { ScrollView, StatusBar, StyleSheet, Text, View, useColorScheme } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Colors, DebugInstructions, Header, LearnMoreLinks, ReloadInstructions } from 'react-native/Libraries/NewAppScreen'
+import { NavigationKeys } from './constants'
+import { ReactNavigationPerformanceView } from '@shopify/react-native-performance-navigation'
 
 type SectionProps = PropsWithChildren<{
     title: string;
@@ -43,38 +45,40 @@ export default () => {
   }
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior='automatic'
-        style={backgroundStyle}
-      >
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white
-          }}
+    <ReactNavigationPerformanceView screenName={NavigationKeys.EXPLORE} interactive>
+      <SafeAreaView style={backgroundStyle}>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={backgroundStyle.backgroundColor}
+        />
+        <ScrollView
+          contentInsetAdjustmentBehavior='automatic'
+          style={backgroundStyle}
         >
-          <Section title='Step One'>
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title='See Your Changes'>
-            <ReloadInstructions />
-          </Section>
-          <Section title='Debug'>
-            <DebugInstructions />
-          </Section>
-          <Section title='Learn More'>
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+          <Header />
+          <View
+            style={{
+              backgroundColor: isDarkMode ? Colors.black : Colors.white
+            }}
+          >
+            <Section title='Step One'>
+              Edit <Text style={styles.highlight}>App.tsx</Text> to change this
+              screen and then come back to see your edits.
+            </Section>
+            <Section title='See Your Changes'>
+              <ReloadInstructions />
+            </Section>
+            <Section title='Debug'>
+              <DebugInstructions />
+            </Section>
+            <Section title='Learn More'>
+              Read the docs to discover what to do next:
+            </Section>
+            <LearnMoreLinks />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </ReactNavigationPerformanceView>
   )
 }
 
