@@ -1,10 +1,11 @@
 import React, { useRef } from 'react'
 import { Animated, Dimensions, Platform, StyleSheet, TouchableOpacity, View, NativeSyntheticEvent, NativeScrollEvent } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import Times from './src/Times'
-import { useNavigation } from '@react-navigation/native'
-import { RootStackParamList } from './App'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { useNavigation } from '@react-navigation/native'
+
+import Times from './Times'
+import { NavigationKeys, RootStackParamList } from './constants'
 
 // import HeartIcon from './HeartIcon'
 // import LeftCaret from '../../assets/icons/LeftCaret'
@@ -38,7 +39,7 @@ export default ({ children }: { children: React.ReactNode }) => {
     elevation: 5
   }
 
-  type homeScreenProp = NativeStackNavigationProp<RootStackParamList, 'Home'>
+  type homeScreenProp = NativeStackNavigationProp<RootStackParamList, 'Buying'>
   const navigation = useNavigation<homeScreenProp>()
 
   //   const goBackWithParams = useGoBackWithParams()
@@ -58,7 +59,7 @@ export default ({ children }: { children: React.ReactNode }) => {
 
         <View style={{ height: 32 }}>
           <Animated.View style={[styles.iconContainer, { opacity: inverseHeaderOpacity, ...boxShadow, left: 25 }]} />
-          <TouchableOpacity onPressIn={() => navigation.navigate('Home')} style={[styles.iconContainer, { left: 25 }]}>
+          <TouchableOpacity onPressIn={() => navigation.navigate(NavigationKeys.BUYING)} style={[styles.iconContainer, { left: 25 }]}>
             <Times />
           </TouchableOpacity>
         </View>
