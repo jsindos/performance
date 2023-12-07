@@ -11,8 +11,13 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.8",
+    "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
+    "@shopify/react-native-performance": "^4.1.2",
+    "@shopify/react-native-performance-lists-profiler": "^1.1.0",
+    "@shopify/react-native-performance-navigation": "^3.0.0",
+    "@shopify/react-native-performance-navigation-bottom-tabs": "^3.0.0",
     "@testing-library/react-native": "^12.4.1",
     "react": "18.2.0",
     "react-native": "0.72.7",
