@@ -1,11 +1,23 @@
 import React, { useRef } from 'react'
-import { Animated, Dimensions, Platform, StyleSheet, TouchableOpacity, View, NativeSyntheticEvent, NativeScrollEvent } from 'react-native'
+import {
+  Animated,
+  Dimensions,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  NativeSyntheticEvent,
+  NativeScrollEvent
+} from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 import Times from './Times'
 import { NavigationKeys, RootStackParamList } from './constants'
-import { ReactNavigationPerformanceView, useProfiledNavigation } from '@shopify/react-native-performance-navigation'
+import {
+  ReactNavigationPerformanceView,
+  useProfiledNavigation
+} from '@shopify/react-native-performance-navigation'
 
 // import HeartIcon from './HeartIcon'
 // import LeftCaret from '../../assets/icons/LeftCaret'
@@ -15,18 +27,26 @@ const NAVBAR_HEIGHT = 77
 const { width } = Dimensions.get('window')
 const IMAGE_HEIGHT = width / 1.5
 
-export default ({ children }: { children: React.ReactNode }) => {
+export default ({ children }: {children: React.ReactNode}) => {
   const yOffset = useRef(new Animated.Value(0)).current
   const { top } = useSafeAreaInsets()
 
   const headerOpacity = yOffset.interpolate({
-    inputRange: [0, IMAGE_HEIGHT - NAVBAR_HEIGHT - 20, IMAGE_HEIGHT - NAVBAR_HEIGHT],
+    inputRange: [
+      0,
+      IMAGE_HEIGHT - NAVBAR_HEIGHT - 20,
+      IMAGE_HEIGHT - NAVBAR_HEIGHT
+    ],
     outputRange: [0, 0, 1],
     extrapolate: 'clamp'
   })
 
   const inverseHeaderOpacity = yOffset.interpolate({
-    inputRange: [0, IMAGE_HEIGHT - NAVBAR_HEIGHT - 20, IMAGE_HEIGHT - NAVBAR_HEIGHT],
+    inputRange: [
+      0,
+      IMAGE_HEIGHT - NAVBAR_HEIGHT - 20,
+      IMAGE_HEIGHT - NAVBAR_HEIGHT
+    ],
     outputRange: [1, 1, 0],
     extrapolate: 'clamp'
   })
@@ -51,14 +71,39 @@ export default ({ children }: { children: React.ReactNode }) => {
   //   const { setIsLightMode } = useContext(ProductOptionsContext)
 
   return (
-    <ReactNavigationPerformanceView screenName={NavigationKeys.PRODUCT_DETAIL} interactive>
-      <View style={{ position: 'absolute', right: 0, left: 0, paddingBottom: 14, paddingTop: 14 + top, zIndex: 1 }}>
+    <ReactNavigationPerformanceView
+      screenName={NavigationKeys.PRODUCT_DETAIL}
+      interactive
+    >
+      <View
+        style={{
+          position: 'absolute',
+          right: 0,
+          left: 0,
+          paddingBottom: 14,
+          paddingTop: 14 + top,
+          zIndex: 1
+        }}
+      >
         <Animated.View
-          style={[StyleSheet.absoluteFill, { opacity: headerOpacity, backgroundColor: '#fff', borderBottomColor: '#efefef', borderBottomWidth: 1 }]}
+          style={[
+            StyleSheet.absoluteFill,
+            {
+              opacity: headerOpacity,
+              backgroundColor: '#fff',
+              borderBottomColor: '#efefef',
+              borderBottomWidth: 1
+            }
+          ]}
         />
 
         <View style={{ height: 32 }}>
-          <Animated.View style={[styles.iconContainer, { opacity: inverseHeaderOpacity, ...boxShadow, left: 25 }]} />
+          <Animated.View
+            style={[
+              styles.iconContainer,
+              { opacity: inverseHeaderOpacity, ...boxShadow, left: 25 }
+            ]}
+          />
           <TouchableOpacity
             onPressIn={uiEvent => {
               navigate(
@@ -90,12 +135,12 @@ export default ({ children }: { children: React.ReactNode }) => {
           ],
           {
             useNativeDriver: Platform.OS !== 'web',
-            listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-            //   if (event.nativeEvent.contentOffset.y >= (IMAGE_HEIGHT - NAVBAR_HEIGHT)) {
-            //     setIsLightMode(false)
-            //   } else {
-            //     setIsLightMode(true)
-            //   }
+            listener: (_event: NativeSyntheticEvent<NativeScrollEvent>) => {
+              //   if (event.nativeEvent.contentOffset.y >= (IMAGE_HEIGHT - NAVBAR_HEIGHT)) {
+              //     setIsLightMode(false)
+              //   } else {
+              //     setIsLightMode(true)
+              //   }
             }
           }
         )}

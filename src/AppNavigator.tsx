@@ -23,7 +23,7 @@ export default () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={NavigationKeys.PRODUCT_DETAIL}
+        initialRouteName={NavigationKeys.BUYING}
       >
         <Stack.Screen
           name={NavigationKeys.BUYING}

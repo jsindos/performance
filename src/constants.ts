@@ -19,8 +19,8 @@ export const NavigationKeys = {
   PRODUCT_DETAIL: 'ProductDetail' as const
 }
 
-  type ValueOf<T> = T[keyof T];
+type ValueOf<T> = T[keyof T]
 
 export type RootStackParamList = {
-    [key in ValueOf<typeof NavigationKeys>]: undefined;
-  };
+  [_key in ValueOf<typeof NavigationKeys>]: undefined
+}
