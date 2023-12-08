@@ -8,8 +8,8 @@ import Explore from './Explore'
 import ProductDetailFixedMenu from './ProductDetailFixedMenu'
 import { NavigationContainer } from '@react-navigation/native'
 import { ReactNavigationPerformanceView } from '@shopify/react-native-performance-navigation'
-import { useResetFlow } from '@shopify/react-native-performance'
-import React, { useRef } from 'react'
+import React, { useContext } from 'react'
+import GlobalContext from './Global.context'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -54,6 +54,7 @@ const TabItem = ({ color, focused, route, Icon }) => (
 )
 
 const BuyingNavigator = () => {
+  const { IS_TESTING_PERFORMANCE } = useContext(GlobalContext)
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -79,14 +80,15 @@ const BuyingNavigator = () => {
         component={Explore}
         options={{
           tabBarButton: buildProfiledBottomTabBarButton(),
-          unmountOnBlur: true
+          unmountOnBlur: IS_TESTING_PERFORMANCE
         }}
       />
       <Tab.Screen
         name={NavigationKeys.BAG}
         component={Bag}
         options={{
-          tabBarButton: buildProfiledBottomTabBarButton()
+          tabBarButton: buildProfiledBottomTabBarButton(),
+          unmountOnBlur: IS_TESTING_PERFORMANCE
         }}
       />
     </Tab.Navigator>
