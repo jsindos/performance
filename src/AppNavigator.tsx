@@ -1,15 +1,15 @@
 import { createProfiledBottomTabNavigator } from '@shopify/react-native-performance-navigation-bottom-tabs'
 import { Text, View } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { NavigationContainer } from '@react-navigation/native'
+import { ReactNavigationPerformanceView } from '@shopify/react-native-performance-navigation'
+import React, { useContext } from 'react'
 
+import GlobalContext from './Global.context'
 import { BuyingBottomTabParamList, NavigationKeys, RootStackParamList } from './constants'
 import ExploreIcon from './pop-components/ExploreIcon'
 import Explore from './Explore'
 import ProductDetailFixedMenu from './ProductDetailFixedMenu'
-import { NavigationContainer } from '@react-navigation/native'
-import { ReactNavigationPerformanceView } from '@shopify/react-native-performance-navigation'
-import React, { useContext } from 'react'
-import GlobalContext from './Global.context'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -24,8 +24,8 @@ export default () => {
         <Stack.Screen
           name={NavigationKeys.BUYING}
           // eslint-disable-next-line
-          children={props => {
-            return <BuyingNavigator {...props} />
+          children={() => {
+            return <BuyingNavigator />
           }}
         />
         <Stack.Screen name={NavigationKeys.PRODUCT_DETAIL} component={ProductDetail} />
@@ -79,6 +79,7 @@ const BuyingNavigator = () => {
         name={NavigationKeys.EXPLORE}
         component={Explore}
         options={{
+          // @ts-ignore
           tabBarButton: buildProfiledBottomTabBarButton(),
           unmountOnBlur: IS_TESTING_PERFORMANCE
         }}
@@ -87,6 +88,7 @@ const BuyingNavigator = () => {
         name={NavigationKeys.BAG}
         component={Bag}
         options={{
+          // @ts-ignore
           tabBarButton: buildProfiledBottomTabBarButton(),
           unmountOnBlur: IS_TESTING_PERFORMANCE
         }}

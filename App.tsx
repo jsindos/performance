@@ -2,10 +2,11 @@
 
 import React, { useCallback, useEffect, useState } from 'react'
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client'
-import AppNavigator from './src/AppNavigator'
 import { LogLevel, PerformanceProfiler, RenderPassReport } from '@shopify/react-native-performance'
 import { init, track } from '@amplitude/analytics-react-native'
-import { GlobalContextProvider } from 'src/Global.context'
+
+import AppNavigator from './src/AppNavigator'
+import { GlobalContextProvider } from './src/Global.context'
 
 const SERVER_URL = 'http://localhost:8080/graphql'
 const IS_TESTING_PERFORMANCE = !__DEV__ && SERVER_URL.includes('localhost')
@@ -27,7 +28,6 @@ function App () {
         .then(data => {
           const latestCommit = data[0]
           setCommitHash(latestCommit.sha)
-          console.log(commitHash)
         })
         .catch(error => console.error(error))
     }
