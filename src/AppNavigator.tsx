@@ -2,22 +2,18 @@ import { createProfiledBottomTabNavigator } from '@shopify/react-native-performa
 import { Text, View } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { NavigationKeys, RootStackParamList } from './constants'
+import { BuyingBottomTabParamList, NavigationKeys, RootStackParamList } from './constants'
 import ExploreIcon from './pop-components/ExploreIcon'
 import Explore from './Explore'
 import ProductDetailFixedMenu from './ProductDetailFixedMenu'
 import { NavigationContainer } from '@react-navigation/native'
 import { ReactNavigationPerformanceView } from '@shopify/react-native-performance-navigation'
+import { useResetFlow } from '@shopify/react-native-performance'
+import React, { useRef } from 'react'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
-type ValueOf<T> = T[keyof T];
-
-type Props = {
-  [key in ValueOf<Pick<typeof NavigationKeys, 'EXPLORE'>>]: undefined;
-};
-
-const { Tab, buildProfiledBottomTabBarButton } = createProfiledBottomTabNavigator<Props>()
+const { Tab, buildProfiledBottomTabBarButton } = createProfiledBottomTabNavigator<BuyingBottomTabParamList>()
 
 export default () => {
   return (
@@ -27,10 +23,10 @@ export default () => {
       >
         <Stack.Screen
           name={NavigationKeys.BUYING}
-        // eslint-disable-next-line
-        children={props => {
-          return <BuyingNavigator {...props} />
-        }}
+          // eslint-disable-next-line
+          children={props => {
+            return <BuyingNavigator {...props} />
+          }}
         />
         <Stack.Screen name={NavigationKeys.PRODUCT_DETAIL} component={ProductDetail} />
       </Stack.Navigator>
@@ -68,10 +64,12 @@ const BuyingNavigator = () => {
         tabBarActiveBackgroundColor: '#000',
         tabBarInactiveBackgroundColor: '#000',
         tabBarShowLabel: false,
-        tabBarIcon: ({ color, focused, size }) => {
+        tabBarIcon: ({ color, focused }) => {
           switch (route.name) {
             case 'Explore':
               return <TabItem {...{ color, focused, route }} Icon={ExploreIcon} />
+            default:
+              return <Text agrandir bold style={{ color: focused ? color : '#fff', fontSize: 9 }}>{route.name.toUpperCase()}</Text>
           }
         }
       })}
@@ -80,9 +78,28 @@ const BuyingNavigator = () => {
         name={NavigationKeys.EXPLORE}
         component={Explore}
         options={{
+          tabBarButton: buildProfiledBottomTabBarButton(),
+          unmountOnBlur: true
+        }}
+      />
+      <Tab.Screen
+        name={NavigationKeys.BAG}
+        component={Bag}
+        options={{
           tabBarButton: buildProfiledBottomTabBarButton()
         }}
       />
     </Tab.Navigator>
+  )
+}
+
+const Bag = () => {
+  return (
+    <ReactNavigationPerformanceView
+      screenName={NavigationKeys.BAG}
+      interactive
+    >
+      <View />
+    </ReactNavigationPerformanceView>
   )
 }

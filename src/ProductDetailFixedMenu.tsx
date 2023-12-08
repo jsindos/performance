@@ -1,23 +1,12 @@
 import React, { useRef } from 'react'
-import {
-  Animated,
-  Dimensions,
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  NativeSyntheticEvent,
-  NativeScrollEvent
-} from 'react-native'
+import { Animated, Dimensions, Platform, StyleSheet, TouchableOpacity, View, NativeSyntheticEvent, NativeScrollEvent } from 'react-native'
+import { ReactNavigationPerformanceView, useProfiledNavigation } from '@shopify/react-native-performance-navigation'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+// import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 import Times from './Times'
 import { NavigationKeys, RootStackParamList } from './constants'
-import {
-  ReactNavigationPerformanceView,
-  useProfiledNavigation
-} from '@shopify/react-native-performance-navigation'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 // import HeartIcon from './HeartIcon'
 // import LeftCaret from '../../assets/icons/LeftCaret'
@@ -26,6 +15,8 @@ import {
 const NAVBAR_HEIGHT = 77
 const { width } = Dimensions.get('window')
 const IMAGE_HEIGHT = width / 1.5
+
+type ProductDetailProp = NativeStackNavigationProp<RootStackParamList, 'ProductDetail'>
 
 export default ({ children }: {children: React.ReactNode}) => {
   const yOffset = useRef(new Animated.Value(0)).current
@@ -59,8 +50,7 @@ export default ({ children }: {children: React.ReactNode}) => {
     elevation: 5
   }
 
-  type homeScreenProp = NativeStackNavigationProp<RootStackParamList, 'Buying'>
-  const { navigate } = useProfiledNavigation<homeScreenProp>()
+  const { navigate } = useProfiledNavigation<ProductDetailProp>()
 
   //   const goBackWithParams = useGoBackWithParams()
 
@@ -105,13 +95,16 @@ export default ({ children }: {children: React.ReactNode}) => {
             ]}
           />
           <TouchableOpacity
-            onPressIn={uiEvent => {
+            onPress={uiEvent => {
               navigate(
                 {
                   source: NavigationKeys.PRODUCT_DETAIL,
                   uiEvent
                 },
-                NavigationKeys.BUYING
+                'Buying',
+                {
+                  screen: 'Explore'
+                }
               )
             }}
             style={[styles.iconContainer, { left: 25 }]}

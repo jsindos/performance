@@ -1,14 +1,19 @@
 import React from 'react'
 import { Text, TouchableOpacity } from 'react-native'
-import { NavigationKeys, RootStackParamList } from './constants'
-import {
-  ReactNavigationPerformanceView,
-  useProfiledNavigation
-} from '@shopify/react-native-performance-navigation'
+import { ReactNavigationPerformanceView, useProfiledNavigation } from '@shopify/react-native-performance-navigation'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
+import { BuyingBottomTabParamList, NavigationKeys, RootStackParamList } from './constants'
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
+import type { CompositeNavigationProp } from '@react-navigation/native'
+
+type ExploreScreenProp = CompositeNavigationProp<
+  BottomTabNavigationProp<BuyingBottomTabParamList, 'Explore'>,
+  NativeStackNavigationProp<RootStackParamList>
+>
+
 export default () => {
-  const { navigate } = useProfiledNavigation<NativeStackNavigationProp<RootStackParamList, 'ProductDetail'>>()
+  const { navigate } = useProfiledNavigation<ExploreScreenProp>()
 
   return (
     <ReactNavigationPerformanceView
