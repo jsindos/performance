@@ -21,6 +21,7 @@ export default () => {
       interactive
     >
       <TouchableOpacity
+        testID='ProductDetail'
         onPressIn={uiEvent => {
           navigate(
             {

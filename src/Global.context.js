@@ -12,8 +12,8 @@ export const GlobalContextProvider = ({ children, SERVER_URL, IS_TESTING_PERFORM
   }
 
   return (
-    <GlobalContextProvider value={value}>
+    <GlobalContext.Provider value={value}>
       {children}
-    </GlobalContextProvider>
+    </GlobalContext.Provider>
   )
 }

@@ -95,6 +95,7 @@ export default ({ children }: {children: React.ReactNode}) => {
             ]}
           />
           <TouchableOpacity
+            testID='goBack'
             onPress={uiEvent => {
               navigate(
                 {

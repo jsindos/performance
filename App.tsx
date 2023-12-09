@@ -38,7 +38,8 @@ function App () {
     if (IS_TESTING_PERFORMANCE) {
       track('pop_performance', { ...report, totalTimeToTransitionMillis: totalTime, __DEV__, commitHash })
     }
-  }, [])
+    console.log(JSON.stringify({ ...report, totalTimeToTransitionMillis: totalTime, __DEV__, commitHash }, null, 2))
+  }, [commitHash])
 
   return (
     <ApolloProvider client={client}>

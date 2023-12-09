@@ -1,0 +1,8 @@
+appId: "com.performance"
+---
+- tapOn: "BAG"
+- tapOn: "EXPLORE"
+- tapOn:
+    id: "ProductDetail"
+- tapOn:
+    id: "goBack"
